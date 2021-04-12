@@ -1,0 +1,104 @@
+﻿@using Microsoft.AspNetCore.Authentication
+@using ChatAPI.Helpers
+
+@{ ViewData["Title"] = "Chat Page"; }
+@model UserToken
+
+
+    <p id="stateLabel">Ready to connect...</p>
+<div id="connect2Chat">
+    <h1>Connect chat</h1>
+    <table>
+        <tr>
+            <td>Username</td>
+            <td>: <input id="Username" type="text" size="30" maxlength="30" value="@Model.UserId" /></td>
+        </tr>
+        <tr>
+            <td>Token</td>
+            <td>: <input id="Token" type="text" value="@Model.Token" /></td>
+        </tr>
+        <tr>
+            <td valign="top"><input id="connectButton" type="button" value="Connect!" /></td>
+            <td><textarea id="txtLogin" cols="40" rows="6" readonly disabled></textarea></td>
+        </tr>
+    </table>
+    <script>if (connect2Chat) if (connect2Chat.style.display == "block") setValLogin();</script>
+</div>
+<div id="chatting" style="display:none">
+    <h1>Stream chat</h1>
+    <table>
+        <tr>
+            <td><input id="closeButton" type="button" value="closeButton!" /></td>
+            <td><ul id="chatMessages"></ul></td>
+        </tr>
+        <tr>
+            <td>Username</td>
+            <td>: <input id="UsernameMsg" type="text" size="30" maxlength="30" readonly /></td>
+        </tr>
+        <tr>
+            <td>Token</td>
+            <td>
+                : <input id="TokenMsg" type="text" size="30" maxlength="30" readonly /><input type="hidden" id="Id" />
+            </td>
+        </tr>
+        <tr>
+            <td>Type socket</td>
+            <td>
+                :
+                <select id="SocketTask" onchange="onchangeGrp(this);">
+                    <option value="11">Create group</option>
+                    <option value="12">Create chat</option>
+                    <option value="21">Add group</option>
+                    <option value="22">Join group</option>
+                    <option value="31">Remove group</option>
+                    <option value="32">Leave group</option>
+                    @*<option value="40">Seach group</option>*@
+                    <option value="70" selected>MessageSend</option>
+                    <option value="71">MessageRecall</option>
+                    <option value="72">MessageRead</option>
+                    <option value="73">MessageDelete</option>
+                    <option value="74">MessageEdit</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Group</td>
+            <td>
+                :
+                <select id="Group">
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>MessageType</td>
+            <td>
+                :
+                <select id="MessageType" onchange="setValMsg()">
+                    <option value="1" selected>Text</option>
+                    <option value="2">Image</option>
+                    <option value="3">Video</option>
+                    <option value="4">Streaming</option>
+                    <option value="5">Excel</option>
+                    <option value="6">Word</option>
+                    <option value="7">Pdf</option>
+                    <option value="9">File</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><span id="tdMsg">Message</span></td>
+            <td>
+                : <input id="Msg" type="text" size="60" onkeyup="setValMsg()" /> <input id="Member" type="text" size="60" onkeyup="setValMsg()" style="display:none" />
+                <input type="hidden" id="MessageId" />
+                <input type="hidden" id="MsgType" />
+                <input type="hidden" id="GroupId" />
+                <input type="hidden" id="MessageText" />
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><input id="sendmessage" type="button" value="Send!" /></td>
+            <td>: <textarea id="txtSendMsg" cols="40" rows="6" readonly disabled></textarea></td>
+        </tr>
+    </table>
+</div>
+<script src="/js/JavaScript.js"></script>
